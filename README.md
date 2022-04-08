@@ -1,2 +1,2 @@
-# jenkins-cicd-dem
- deployment using jenkins and github
+# jenkins-cicd-demo
+ deployment using jenkins and github testing
