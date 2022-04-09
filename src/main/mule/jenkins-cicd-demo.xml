@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="91cb753a-d7a4-48a5-9e98-43460064b7f9" >
+		<http:listener-connection host="${http.host}" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="b21c5702-9fb7-41aa-979d-43fbc1b54ba3" file="dev.properties" />
+	<flow name="jenkins-cicd-demoFlow" doc:id="82ea0e90-90f4-4660-a122-74b5afa01422" >
+		<http:listener doc:name="Listener" doc:id="380bd24d-5999-46df-ba31-e4e01b6931bc" config-ref="HTTP_Listener_config" path="/cicdtest"/>
+		<ee:transform doc:name="Transform Message" doc:id="2f393fdc-1033-4d7c-8225-4d009460391c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Response":"Deployed successfully"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a08d517d-a451-4d5e-9c09-0f40a10bfa22" message="good job"/>
+	</flow>
+</mule>
